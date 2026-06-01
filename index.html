@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>クローバー協同組合 総会対策MTG 対策ダッシュボード</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter & Noto Sans JP -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fef2f2',
+                            100: '#fee2e2',
+                            500: '#ef4444',
+                            600: '#dc2626',
+                            900: '#7f1d1d',
+                        },
+                        coop: {
+                            bg: '#0f172a',
+                            panel: '#1e293b',
+                            accent: '#10b981'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Noto Sans JP', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans JP', sans-serif;
+            background-color: #0b0f19;
+            color: #f1f5f9;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+        .glow-red {
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+        }
+        .glow-green {
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.2);
+        }
+        .tab-active {
+            border-bottom: 2px solid #ef4444;
+            color: #ef4444;
+        }
+    </style>
+</head>
+<body class="min-h-screen transition-colors duration-200">
+
+    <!-- Main App Container -->
+    <div id="app" class="flex flex-col min-h-screen">
+        
+        <!-- Header -->
+        <header class="bg-slate-900 border-b border-slate-800 sticky top-0 z-50 px-4 py-3 sm:px-6">
+            <div class="max-w-7xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="bg-red-950 text-red-500 p-2.5 rounded-lg border border-red-800">
+                        <i class="fa-solid fa-triangle-exclamation text-xl animate-pulse"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center space-x-2">
+                            <span class="px-2 py-0.5 text-xs font-semibold bg-red-900/50 text-red-400 border border-red-700/50 rounded">処分後通常総会対策</span>
+                            <span class="text-xs text-slate-400">実況分析資料</span>
+                        </div>
+                        <h1 class="text-xl font-black tracking-tight text-white sm:text-2xl">
+                            クローバー協同組合 総会対策MTG <span class="text-red-500 text-sm font-medium">裏工作＆シナリオ可視化</span>
+                        </h1>
+                    </div>
+                </div>
+                
+                <!-- Quick Meta Stats -->
+                <div class="flex flex-wrap items-center gap-3 text-xs">
+                    <div class="bg-slate-800 border border-slate-700 rounded-lg p-2 flex items-center space-x-2">
+                        <span class="text-slate-400">現在日時 (システム想定):</span>
+                        <span class="font-mono text-emerald-400 font-bold" id="current-time">2026/06/01 20:35</span>
+                    </div>
+                    <div class="bg-slate-800 border border-slate-700 rounded-lg p-2 flex items-center space-x-2">
+                        <span class="text-slate-400">総会体裁日:</span>
+                        <span class="font-mono text-amber-400 font-bold">5月29日 (架空バックデート)</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+            
+            <!-- Warning Banner -->
+            <div class="bg-red-950/40 border border-red-900/60 rounded-xl p-4 flex flex-col sm:flex-row gap-4 items-start glow-red">
+                <div class="bg-red-900/50 p-3 rounded-lg text-red-400 border border-red-800 shrink-0">
+                    <i class="fa-solid fa-radiation text-2xl"></i>
+                </div>
+                <div>
+                    <h3 class="text-red-400 font-bold text-lg mb-1">【行政処分後の密室対策】クローバー協同組合 存続つじつま合わせの生実態</h3>
+                    <p class="text-sm text-slate-300 leading-relaxed">
+                        技能実習生の監理団体許可が取り消されたクローバー協同組合が、静岡県への総会報告（6月12日期限）を切り抜けるための対策会議です。
+                        実体のない事務所問題の偽装、大量脱退組合員の処理、身内やダミー理事による定数合わせ、GMCのバックデート加入、そして最終的に「株式会社」へ組織変更して逃げ切るという生々しい「裏工作シナリオ」を、可視化・分析するための実証ダッシュボードです。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Timeline & Countdown Row -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Countdown Panel -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="text-slate-300 font-bold text-sm uppercase tracking-wider"><i class="fa-solid fa-hourglass-half mr-2 text-red-500"></i>静岡県報告書提出期限まで</h3>
+                            <span class="px-2 py-0.5 bg-red-950 text-red-400 border border-red-900 rounded-full text-2xs">6月12日〆切</span>
+                        </div>
+                        <div class="text-center py-6">
+                            <div class="text-5xl font-black text-white tracking-widest font-mono mb-2" id="countdown-timer">
+                                11<span class="text-lg font-normal text-slate-400">日</span> 03<span class="text-lg font-normal text-slate-400">時間</span>
+                            </div>
+                            <p class="text-xs text-slate-400">総会終結後2週間以内の法廷期限 (5月29日総会開催として計算)</p>
+                        </div>
+                    </div>
+                    <div class="border-t border-slate-800 pt-4 mt-2">
+                        <div class="flex justify-between text-xs text-slate-400 mb-2">
+                            <span>現在の進捗度</span>
+                            <span id="overall-progress-text">35%</span>
+                        </div>
+                        <div class="w-full bg-slate-800 rounded-full h-2">
+                            <div class="bg-red-500 h-2 rounded-full transition-all duration-500" id="overall-progress-bar" style="width: 35%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline Visualizer -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 lg:col-span-2">
+                    <h3 class="text-slate-300 font-bold text-sm mb-4"><i class="fa-solid fa-calendar-days mr-2 text-emerald-400"></i>重要スケジュールとつじつま合わせ時系列</h3>
+                    <div class="relative pl-6 border-l-2 border-slate-800 space-y-4 text-xs">
+                        <!-- Event 1 -->
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-1 bg-red-900 border border-red-700 w-4 h-4 rounded-full flex items-center justify-center">
+                                <div class="w-1.5 h-1.5 bg-red-400 rounded-full"></div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:justify-between gap-1">
+                                <span class="font-bold text-slate-200">事務所の事実上の解約</span>
+                                <span class="text-red-400 font-mono">2月28日 (実施済)</span>
+                            </div>
+                            <p class="text-slate-400 mt-1">クローバーの事務所を解約。総会開催場所や登記場所の実体がなくなる。</p>
+                        </div>
+                        <!-- Event 2 -->
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-1 bg-amber-900 border border-amber-700 w-4 h-4 rounded-full flex items-center justify-center">
+                                <div class="w-1.5 h-1.5 bg-amber-400 rounded-full"></div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:justify-between gap-1">
+                                <span class="font-bold text-slate-200">GMCの架空加入日（バックデート）</span>
+                                <span class="text-amber-400 font-mono">3月31日 (遡り体裁)</span>
+                            </div>
+                            <p class="text-slate-400 mt-1">トラブル発覚前に組合員（GMC社）として加入していたことにして、出資金1万円の処理を調整。</p>
+                        </div>
+                        <!-- Event 3 -->
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-1 bg-blue-900 border border-blue-700 w-4 h-4 rounded-full flex items-center justify-center">
+                                <div class="w-1.5 h-1.5 bg-blue-400 rounded-full"></div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:justify-between gap-1">
+                                <span class="font-bold text-slate-200">通常総会の開催（架空設定）</span>
+                                <span class="text-blue-400 font-mono">5月29日 (金) (設定上)</span>
+                            </div>
+                            <p class="text-slate-400 mt-1">土日（30,31日）開催を避けるために金曜日に開催した体に。沼津駅前ビルで形だけ整える案。</p>
+                        </div>
+                        <!-- Event 4 -->
+                        <div class="relative">
+                            <div class="absolute -left-[31px] top-1 bg-emerald-950 border border-emerald-700 w-4 h-4 rounded-full flex items-center justify-center">
+                                <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full"></div>
+                            </div>
+                            <div class="flex flex-col sm:flex-row sm:justify-between gap-1">
+                                <span class="font-bold text-emerald-400">静岡県への事業報告書等 提出期限</span>
+                                <span class="text-emerald-400 font-mono font-bold">6月12日 (金) (残り11日)</span>
+                            </div>
+                            <p class="text-slate-400 mt-1">総会終結後2週間以内の届出ルール。いつも通りの報告は通らないため「ストーリー作り」に奔走。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Visual Mapping: Roles & Scenario -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Roles / Actors List -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 lg:col-span-1">
+                    <div class="flex items-center justify-between mb-4">
+                        <h3 class="text-slate-300 font-bold text-sm"><i class="fa-solid fa-users-viewfinder mr-2 text-red-500"></i>主要登場人物と配役・工作役割</h3>
+                    </div>
+                    <div class="space-y-3 max-h-[450px] overflow-y-auto pr-1" id="actors-list">
+                        <!-- Actor 1 -->
+                        <div class="p-3 bg-slate-800/50 border border-slate-700/50 rounded-lg hover:border-red-500/50 transition cursor-pointer" onclick="app.selectActor('yamada')">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-sm text-white">山田 氏</span>
+                                <span class="px-1.5 py-0.5 bg-red-950 text-red-400 text-3xs border border-red-900 rounded">理事・キーマン</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">ヒューマンデザイン代表。クローバー組合のメイン。最後は株式会社に移行して逃げ切る狙い。</p>
+                        </div>
+                        <!-- Actor 2 -->
+                        <div class="p-3 bg-slate-800/50 border border-slate-700/50 rounded-lg hover:border-red-500/50 transition cursor-pointer" onclick="app.selectActor('sugiyama')">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-sm text-white">杉山 氏</span>
+                                <span class="px-1.5 py-0.5 bg-blue-950 text-blue-400 text-3xs border border-blue-900 rounded">行政書士・実務</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">書類や登記の作成、つじつま合わせのストーリー構築をする実務担当。娘や父親の名前も活用。</p>
+                        </div>
+                        <!-- Actor 3 -->
+                        <div class="p-3 bg-slate-800/50 border border-slate-700/50 rounded-lg hover:border-red-500/50 transition cursor-pointer" onclick="app.selectActor('sato')">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-sm text-white">佐藤 氏</span>
+                                <span class="px-1.5 py-0.5 bg-slate-900 text-slate-400 text-3xs border border-slate-700 rounded">GB・背後者</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">グローバルブリッジの代表。以前の総会で怒って部屋を出た人物。裏工作に同調。</p>
+                        </div>
+                        <!-- Actor 4 -->
+                        <div class="p-3 bg-slate-800/50 border border-slate-700/50 rounded-lg hover:border-red-500/50 transition cursor-pointer" onclick="app.selectActor('chojo')">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-sm text-white">杉山の長女 (りかこ)</span>
+                                <span class="px-1.5 py-0.5 bg-purple-950 text-purple-400 text-3xs border border-purple-900 rounded">ダミー理事候補</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">GMC社代表。理法定数6名維持のためのダミーとして巻き込み、最後は3名の残存理事にする案。</p>
+                        </div>
+                        <!-- Actor 5 -->
+                        <div class="p-3 bg-slate-800/50 border border-slate-700/50 rounded-lg hover:border-red-500/50 transition cursor-pointer" onclick="app.selectActor('unia')">
+                            <div class="flex items-center justify-between">
+                                <span class="font-bold text-sm text-white">ウニア 氏 (ウニアトレーディング)</span>
+                                <span class="px-1.5 py-0.5 bg-slate-900 text-slate-400 text-3xs border border-slate-700 rounded">元理事・組合員</span>
+                            </div>
+                            <p class="text-xs text-slate-400 mt-1">欠格事由の影響が出ないよう脱退処理。出資金（50万/25万）の裏交渉を伴うお詫びが必要。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Actor Map / Network & Information -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 lg:col-span-2 flex flex-col justify-between" id="actor-details">
+                    <div>
+                        <h3 class="text-slate-300 font-bold text-sm mb-3" id="details-title"><i class="fa-solid fa-circle-info mr-2 text-amber-500"></i>役員定数(6名)と「逃げ切り株式会社化」の布陣</h3>
+                        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 mb-4 text-xs space-y-3">
+                            <p class="text-slate-300 font-medium">会議中の重要決定「役員定数6名の確保と後の削減シナリオ」：</p>
+                            <div class="grid grid-cols-2 gap-2 text-center text-3xs sm:text-xs">
+                                <div class="bg-slate-800 p-2 rounded border border-slate-700">
+                                    <div class="text-slate-400">現在役員 (三田、鈴木ら大量離脱)</div>
+                                    <div class="font-bold text-red-400 mt-1 font-mono">法廷定数(6名)割れの危機</div>
+                                </div>
+                                <div class="bg-slate-800 p-2 rounded border border-slate-700">
+                                    <div class="text-slate-400">対策：身内・ダミー名義借り</div>
+                                    <div class="font-bold text-emerald-400 mt-1 font-mono">条件付き選任＋遡り加入</div>
+                                </div>
+                            </div>
+                            <p class="text-slate-400 leading-relaxed">
+                                行政の目をすり抜けるため、一旦<strong>「山田、杉山父、ウニア、稲村、ジョーカー、杉山長女」</strong>の6名で通常総会を可決。その後、定款変更（役員定数3名へ削減）を申請し、不要な名義（ウニア、杉山父など）を辞任・除外。最終的に<strong>「山田、稲村、長女」の3名体制で「株式会社クローバー」へ組織変更し、幕引きを図る</strong>という極めて高度で悪質なシナリオです。
+                            </p>
+                        </div>
+                    </div>
+                    <!-- Details Sub-Panel for Selected Actor -->
+                    <div id="actor-detail-box" class="p-4 bg-slate-800/30 border border-slate-850 rounded-xl">
+                        <div class="flex items-center space-x-2 text-sm font-bold text-white mb-2">
+                            <span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>
+                            <span id="actor-detail-name">詳細を見るには左の人物をクリック</span>
+                        </div>
+                        <p class="text-xs text-slate-400 leading-relaxed" id="actor-detail-desc">
+                            各アクターをクリックすると、その人物がミーティング内で担っている役割や、関与する偽装・つじつま合わせの工作内容の詳細が表示されます。
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive TODO Board & Story Contraster -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Interactive TODO List -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 lg:col-span-2">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
+                        <div>
+                            <h3 class="text-slate-300 font-bold text-sm"><i class="fa-solid fa-list-check mr-2 text-red-500"></i>実行タスク（TODO）管理ボード</h3>
+                            <p class="text-2xs text-slate-400">会議で決定された、行政報告用＆裏工作のTODO</p>
+                        </div>
+                        <!-- Filters -->
+                        <div class="flex gap-1 bg-slate-800 p-1 rounded-lg text-2xs self-start sm:self-auto">
+                            <button onclick="app.filterTasks('all')" id="filter-all" class="px-2 py-1 bg-slate-700 text-white rounded font-bold">すべて</button>
+                            <button onclick="app.filterTasks('admin')" id="filter-admin" class="px-2 py-1 text-slate-400 hover:text-white rounded">表向き(行政)</button>
+                            <button onclick="app.filterTasks('back')" id="filter-back" class="px-2 py-1 text-slate-400 hover:text-white rounded">裏工作(つじつま)</button>
+                        </div>
+                    </div>
+
+                    <!-- TODO Items -->
+                    <div class="space-y-2 max-h-[350px] overflow-y-auto pr-1" id="todo-container">
+                        <!-- Task items will be rendered by JS -->
+                    </div>
+
+                    <!-- Add Custom Task (Interactive Feature) -->
+                    <div class="border-t border-slate-800 pt-4 mt-4">
+                        <form id="add-task-form" onsubmit="app.handleAddTask(event)" class="flex gap-2">
+                            <input type="text" id="new-task-text" placeholder="新規の対策タスクを追加..." class="flex-1 bg-slate-950 border border-slate-800 rounded-lg px-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500" required>
+                            <select id="new-task-category" class="bg-slate-950 border border-slate-800 rounded-lg px-2 py-2 text-xs text-white focus:outline-none focus:border-red-500">
+                                <option value="admin">表向き(行政報告)</option>
+                                <option value="back">裏工作(つじつま合わせ)</option>
+                            </select>
+                            <button type="submit" class="bg-red-600 hover:bg-red-700 text-white font-bold px-3 rounded-lg text-xs transition shrink-0">追加</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Grounded Story Contrast -->
+                <div class="bg-slate-900 border border-slate-800 rounded-xl p-5 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-slate-300 font-bold text-sm mb-3"><i class="fa-solid fa-mask mr-2 text-amber-500"></i>表と裏の「ストーリー乖離構造」</h3>
+                        <p class="text-2xs text-slate-400 mb-4">静岡県へ見せる書類上の「表」と、密室で進める「裏」の実態対比</p>
+                        
+                        <div class="space-y-3">
+                            <!-- Section 1 -->
+                            <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                                <div class="text-2xs font-bold text-slate-400 mb-1">【事務所の開催場所】</div>
+                                <div class="grid grid-cols-2 gap-2 text-2xs">
+                                    <div class="text-emerald-400 border-r border-slate-800 pr-1"><span class="font-bold text-slate-400">表:</span> 沼津駅前の会議室を急遽レンタル（領収書は捨てたで逃げ切る）</div>
+                                    <div class="text-red-400 pl-1"><span class="font-bold text-slate-400">裏:</span> 2月に事務所解約済み、実際は山田氏自宅等のペーパー化。</div>
+                                </div>
+                            </div>
+                            <!-- Section 2 -->
+                            <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                                <div class="text-2xs font-bold text-slate-400 mb-1">【GMC社の加入】</div>
+                                <div class="grid grid-cols-2 gap-2 text-2xs">
+                                    <div class="text-emerald-400 border-r border-slate-800 pr-1"><span class="font-bold text-slate-400">表:</span> トラブル発覚前の3月末に通常加入していたとする。</div>
+                                    <div class="text-red-400 pl-1"><span class="font-bold text-slate-400">裏:</span> 5月末に「3月末加入」としてバックデート。1万円を即振込。</div>
+                                </div>
+                            </div>
+                            <!-- Section 3 -->
+                            <div class="bg-slate-950 p-3 rounded-lg border border-slate-800">
+                                <div class="text-2xs font-bold text-slate-400 mb-1">【事業計画の中身】</div>
+                                <div class="grid grid-cols-2 gap-2 text-2xs">
+                                    <div class="text-emerald-400 border-r border-slate-800 pr-1"><span class="font-bold text-slate-400">表:</span> 共同購買事業等で人件費・経費ゼロの休眠風で申請。</div>
+                                    <div class="text-red-400 pl-1"><span class="font-bold text-slate-400">裏:</span> 実習監理と職業紹介が全廃。事業実態はほぼ100%消滅。</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-800 text-center">
+                        <span class="text-2xs text-red-400/80 font-mono"><i class="fa-solid fa-triangle-exclamation mr-1"></i>行政処分後の逃亡・組織解体モデル</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Meeting Timeline & Interactive Transcript Section -->
+            <div class="bg-slate-900 border border-slate-800 rounded-xl p-5">
+                <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4">
+                    <div>
+                        <h3 class="text-slate-300 font-bold text-sm"><i class="fa-solid fa-file-waveform mr-2 text-red-500"></i>MTGタイムテーブル＆文字起こし検索</h3>
+                        <p class="text-2xs text-slate-400">会議中の生々しい言及部分を時間・発言から瞬時に抽出可能</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <input type="text" id="transcript-search" oninput="app.searchTranscript()" placeholder="文字起こしを検索 (例: バックデート, 1万円, 事務所...)" class="bg-slate-950 border border-slate-800 rounded-lg px-3 py-1.5 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-red-500 w-full sm:w-64">
+                    </div>
+                </div>
+
+                <!-- Grid Layout: TOC and Search Results -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- TOC -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 text-xs">
+                        <h4 class="font-bold text-slate-300 mb-3 border-b border-slate-800 pb-2">タイムテーブル（議題目次）</h4>
+                        <div class="space-y-2 max-h-[300px] overflow-y-auto pr-1">
+                            <div class="flex justify-between items-start hover:bg-slate-900 p-1.5 rounded cursor-pointer" onclick="app.seekTo('00:00')">
+                                <span class="text-slate-400 font-mono shrink-0 mr-2">00:00</span>
+                                <span class="text-slate-200">静岡県への総会報告スケジュール確認</span>
+                            </div>
+                            <div class="flex justify-between items-start hover:bg-slate-900 p-1.5 rounded cursor-pointer" onclick="app.seekTo('02:08')">
+                                <span class="text-slate-400 font-mono shrink-0 mr-2">02:08</span>
+                                <span class="text-slate-200">大量脱退に伴う組合員名簿の懸念と対策</span>
+                            </div>
+                            <div class="flex justify-between items-start hover:bg-slate-900 p-1.5 rounded cursor-pointer" onclick="app.seekTo('03:07')">
+                                <span class="text-slate-400 font-mono shrink-0 mr-2">03:07</span>
+                                <span class="text-slate-200">2月末に解約済みの「事務所」と総会場所偽装</span>
+                            </div>
+                            <div class="flex justify-between items-start hover:bg-slate-900 p-1.5 rounded cursor-pointer" onclick="app.seekTo('07:43')">
+                                <span class="text-slate-400 font-mono shrink-0 mr-2">07:43</span>
+                                <span class="text-slate-200">許可取り消し後の総会議案の作成方針</span>
+                            </div>
+                            <div class="flex justify-between items-start hover:bg-slate-900 p-1.5 rounded cursor-pointer" onclick="app.seekTo('09:46')">
+                                <span class="text-slate-400 font-mono shrink-0 mr-2">09:46</span>
+                                <span class="text-slate-200">無料職業紹介事業の廃止手続き相談</span>
+                            </div>
+                            <div class="flex justify-between items-start hover:bg-slate-900 p-1.5 rounded cursor-pointer" onclick="app.seekTo('13:15')">
+                                <span class="text-slate-400 font-mono shrink-0 mr-2">13:15</span>
+                                <span class="text-slate-200">理事変更と大量離脱に伴う定数不足課題</span>
+                            </div>
+                            <div class="flex justify-between items-start hover:bg-slate-900 p-1.5 rounded cursor-pointer" onclick="app.seekTo('22:01')">
+                                <span class="text-slate-400 font-mono shrink-0 mr-2">22:01</span>
+                                <span class="text-slate-200">出資金未返還組合員(40社)の処理ストーリー</span>
+                            </div>
+                            <div class="flex justify-between items-start hover:bg-slate-900 p-1.5 rounded cursor-pointer" onclick="app.seekTo('35:50')">
+                                <span class="text-slate-400 font-mono shrink-0 mr-2">35:50</span>
+                                <span class="text-slate-200">定数を満たすための身内・ダミーの役員選定</span>
+                            </div>
+                            <div class="flex justify-between items-start hover:bg-slate-900 p-1.5 rounded cursor-pointer" onclick="app.seekTo('47:42')">
+                                <span class="text-slate-400 font-mono shrink-0 mr-2">47:42</span>
+                                <span class="text-slate-200">株式会社への組織変更を見据えた役員決定</span>
+                            </div>
+                            <div class="flex justify-between items-start hover:bg-slate-900 p-1.5 rounded cursor-pointer" onclick="app.seekTo('48:58')">
+                                <span class="text-slate-400 font-mono shrink-0 mr-2">48:58</span>
+                                <span class="text-slate-200">GMCのバックデート(遡り)加入手続き相談</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Interactive Script Render Area -->
+                    <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 md:col-span-2 text-xs flex flex-col justify-between">
+                        <div class="flex justify-between items-center mb-2 border-b border-slate-800 pb-2">
+                            <span class="font-bold text-slate-300">文字起こしタイムスタンプ（部分抜粋）</span>
+                            <span class="text-2xs text-slate-500 font-mono" id="results-count">5項目表示</span>
+                        </div>
+                        <div class="space-y-3 max-h-[250px] overflow-y-auto pr-1" id="transcript-container">
+                            <!-- Populated dynamically -->
+                        </div>
+                        <div class="text-3xs text-red-400 mt-2 text-right">
+                            ※タイムスタンプをクリックすると公式動画の該当秒数から再生可能です（別タブ）
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-slate-950 border-t border-slate-900 py-6 px-4 text-center text-xs text-slate-500">
+            <div class="max-w-7xl mx-auto space-y-2">
+                <p>クローバー協同組合 通常総会対策MTG 分析＆要約ダッシュボード</p>
+                <p class="text-slate-600">本ページは公開されたYouTube動画の文字起こしテキストに基づき、会議内容をドキュメンタリーおよび反面教師的な分析素材として構造化したインタラクティブ資料です。</p>
+            </div>
+        </footer>
+
+    </div>
+
+    <!-- Notification Overlay -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-emerald-600 text-white px-4 py-2 rounded-lg text-xs font-bold opacity-0 transition-opacity duration-300 pointer-events-none z-50 shadow-lg flex items-center space-x-2">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toast-message">メッセージ</span>
+    </div>
+
+    <script>
+        // Data Store
+        const actorData = {
+            yamada: {
+                name: "山田 氏 (ヒューマンデザイン)",
+                role: "クローバー協同組合の代表理事 / 実質的な支配者",
+                desc: "本件の主犯格ポジション。技能実習監理団体の取り消しを受け、組合は維持できないため、おとなしく廃止するのではなく、「山田・稲村・長女」の実質身内3名に集約して最終的に「株式会社クローバー」に組織変更（資産逃避・延命）を行うシナリオを推進している。"
+            },
+            sugiyama: {
+                name: "杉山 氏 (行政書士)",
+                role: "つじつま合わせの実務設計・書類作成担当",
+                desc: "実務・登記手続きを仕切る人物。事務所解約済みの件や役員の定数割れの危機、別会社GMCの加入バックデートなど、あらゆる「違法・不当な遡り処理」を提案し、静岡県へ出すためのストーリーを構築する。自身の父親や長女、知人の兄弟の戸籍などをダミー役員候補として提案。"
+            },
+            sato: {
+                name: "佐藤 氏 (GB・背後者)",
+                role: "組合の陰の協力者 / 理事",
+                desc: "かつての総会で怒って机を叩いて席を立ったエピソードが語られる。山田・杉山らと行動を共にし、脱退届の回収などの分担を請け負う。裏工作への合意者。"
+            },
+            chojo: {
+                name: "杉山氏の長女 (りかこ / GMC代表)",
+                role: "定数合わせのダミー役員 / 最終組織の役員候補",
+                desc: "杉山氏の娘。別会社GMCの代表取締役。組合の役員定数（6名）を一時的に埋めるための「ダミー」として、山田氏らによって勝手に役員名義を使用される。最後は山田・稲村と共に、株式会社へ移行する際の残存理事として残る計画に巻き込まれている。"
+            },
+            unia: {
+                name: "ウニア 氏 (ウニアトレーディング)",
+                role: "取引消滅に伴う脱退・元理事",
+                desc: "欠格要件に巻き込まれるのを防ぐために今回脱退扱いとする。ただし、預かっている出資金（50万円）を返す際、お金がないために「お詫びをして半分（25万）だけ返して何とか納得してもらう」という、極めて身勝手な裏交渉を山田氏・杉山氏から検討されている。"
+            }
+        };
+
+        const transcriptData = [
+            { time: "01:09", text: "行政の報告は6月15日。今年は30、31日が土日なので、29日（金）にやった体（てい）にし、静岡県へは6月12日までに提出するスケジュールを組みます。", url: "https://www.youtube.com/watch?v=b2PYMWZavvo&t=69" },
+            { time: "02:29", text: "やっぱり「行政処分がありました」と。だからどうしようと思っているという報告は最低限必要。こちらから先手を打って措置をとったストーリーを書かないと、いつもの形式報告では通らない。", url: "https://www.youtube.com/watch?v=b2PYMWZavvo&t=149" },
+            { time: "03:07", text: "クローバーの事務所は2月末で解約しちゃってる。総会の開催場所を聞かれたら？一応、沼津駅前のビルを形だけ取っておきますか。捨てちゃいましたと言い逃れる手もある。", url: "https://www.youtube.com/watch?v=b2PYMWZavvo&t=311" },
+            { time: "05:58", text: "事務所がないんだよね、今。だから沼津の駅前のビルの上でやった体にする。大したコストじゃないので場所取りをさせておきます。", url: "https://www.youtube.com/watch?v=b2PYMWZavvo&t=358" },
+            { time: "12:53", text: "事業計画はいつも共同購入の表を載せているので、それだけでいい。経費類はないので人件費もストップ。形だけの計画にする。", url: "https://www.youtube.com/watch?v=b2PYMWZavvo&t=773" },
+            { time: "19:45", text: "理事が6名必要。足りない分は稲村、ジョーカー、あとはGMCを入れちゃえばいい。GMCは組合員ではないので、名簿の日付をいじる必要がある。", url: "https://www.youtube.com/watch?v=b2PYMWZavvo&t=1185" },
+            { time: "22:01", text: "資金返してない会社が42社ある。残ったところはみんな取引がないが、1年通して順次脱退を回収するストーリーで、47社残っている前提で届け出るのが説明しやすい。", url: "https://www.youtube.com/watch?v=b2PYMWZavvo&t=1321" },
+            { time: "46:23", text: "高木さんの弟たち、お金に困っているから『名前どんどん使って構わないよ』って言いそうな兄弟が2人いる。でも役員経験がないからな...", url: "https://www.youtube.com/watch?v=b2PYMWZavvo&t=2783" },
+            { time: "47:42", text: "最終的に山田、稲村、ジョーカー（または娘）ら3人で『株式会社クローバー』に組織変更する。その布石のために今回の役員を選定する。", url: "https://www.youtube.com/watch?v=b2PYMWZavvo&t=2862" },
+            { time: "57:14", text: "GMCは3月末に入っていたことにする。4月5月加入だと目立つから、トラブル発覚前に入ってたことにして、出資金1万を入れておく。日付の遡りは可能。", url: "https://www.youtube.com/watch?v=b2PYMWZavvo&t=3434" }
+        ];
+
+        const initialTasks = [
+            { id: 1, text: "5月29日に総会を開催した体（てい）で議事録を作成する", category: "admin", completed: true },
+            { id: 2, text: "静岡県への事業報告書一式の提出を完了させる", category: "admin", completed: false },
+            { id: 3, text: "無料職業紹介事業の廃止届出書を準備・提出する", category: "admin", completed: false },
+            { id: 4, text: "共同購入事業のみの、活動実体ゼロの事業計画書を作成する", category: "admin", completed: true },
+            { id: 5, text: "沼津駅前のレンタル会議室を『総会開催場所』としてダミー手配する", category: "back", completed: false },
+            { id: 6, text: "GMC社の加入日を『3月31日以前』に遡るため、名簿と日付を改ざんする", category: "back", completed: false },
+            { id: 7, text: "GMC社の出資金（1万円）を月曜日に大至急振り込んで辻褄を合わせる", category: "back", completed: false },
+            { id: 8, text: "ウニア氏の脱退処理と、50万の出資金を25万に値切る交渉を行う", category: "back", completed: false },
+            { id: 9, text: "杉山氏の娘（長女りかこ）に連絡を取り、ダミー役員就任の内諾（形だけ）をとる", category: "back", completed: false },
+            { id: 10, text: "残存する取引ゼロの42社から1年かけて脱退届を順次回収する", category: "back", completed: false },
+            { id: 11, text: "山田氏の自宅住所へクローバーの事務所住所変更（遡り登記）をかける", category: "back", completed: true }
+        ];
+
+        // App Controller Class
+        class CloverDashboard {
+            constructor() {
+                this.tasks = [...initialTasks];
+                this.currentFilter = 'all';
+                this.init();
+            }
+
+            init() {
+                this.renderTasks();
+                this.renderTranscript(transcriptData);
+                this.updateProgress();
+            }
+
+            // Progress Bar Logic
+            updateProgress() {
+                const total = this.tasks.length;
+                const completed = this.tasks.filter(t => t.completed).length;
+                const percent = total > 0 ? Math.round((completed / total) * 100) : 0;
+                
+                const bar = document.getElementById('overall-progress-bar');
+                const text = document.getElementById('overall-progress-text');
+                
+                if (bar && text) {
+                    bar.style.width = `${percent}%`;
+                    text.innerText = `${percent}% (${completed}/${total}完了)`;
+                }
+            }
+
+            // Render TODO List
+            renderTasks() {
+                const container = document.getElementById('todo-container');
+                container.innerHTML = '';
+
+                const filtered = this.tasks.filter(task => {
+                    if (this.currentFilter === 'all') return true;
+                    return task.category === this.currentFilter;
+                });
+
+                if (filtered.length === 0) {
+                    container.innerHTML = `<div class="text-slate-500 text-xs py-4 text-center">該当するタスクはありません。</div>`;
+                    return;
+                }
+
+                filtered.forEach(task => {
+                    const div = document.createElement('div');
+                    div.className = `flex items-center justify-between p-3 rounded-lg border text-xs transition ${
+                        task.completed 
+                        ? 'bg-slate-900/30 border-slate-800 text-slate-500 line-through' 
+                        : 'bg-slate-800/40 border-slate-700/60 text-slate-200 hover:border-slate-600'
+                    }`;
+
+                    const catBadge = task.category === 'admin' 
+                        ? `<span class="px-1.5 py-0.5 bg-emerald-950 text-emerald-400 text-3xs border border-emerald-900 rounded shrink-0">表(行政)</span>`
+                        : `<span class="px-1.5 py-0.5 bg-red-950 text-red-400 text-3xs border border-red-900 rounded shrink-0">裏(偽装)</span>`;
+
+                    div.innerHTML = `
+                        <div class="flex items-center space-x-3 flex-1 min-w-0 mr-2">
+                            <input type="checkbox" ${task.completed ? 'checked' : ''} 
+                                onclick="app.toggleTask(${task.id})" 
+                                class="w-4 h-4 rounded text-red-600 bg-slate-950 border-slate-800 focus:ring-red-500 focus:ring-2 focus:ring-offset-slate-900 cursor-pointer shrink-0">
+                            <span class="truncate">${task.text}</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            ${catBadge}
+                            <button onclick="app.deleteTask(${task.id})" class="text-slate-500 hover:text-red-400 p-1"><i class="fa-regular fa-trash-can"></i></button>
+                        </div>
+                    `;
+                    container.appendChild(div);
+                });
+            }
+
+            // Toggle Task Complete State
+            toggleTask(id) {
+                const task = this.tasks.find(t => t.id === id);
+                if (task) {
+                    task.completed = !task.completed;
+                    this.renderTasks();
+                    this.updateProgress();
+                    this.showToast(task.completed ? "タスクを完了にしました" : "タスクを未完了に戻しました");
+                }
+            }
+
+            // Add Custom Task
+            handleAddTask(event) {
+                event.preventDefault();
+                const textInput = document.getElementById('new-task-text');
+                const catInput = document.getElementById('new-task-category');
+                
+                if (!textInput.value.trim()) return;
+
+                const newTask = {
+                    id: Date.now(),
+                    text: textInput.value.trim(),
+                    category: catInput.value,
+                    completed: false
+                };
+
+                this.tasks.push(newTask);
+                textInput.value = '';
+                
+                this.renderTasks();
+                this.updateProgress();
+                this.showToast("新規対策タスクを追加しました");
+            }
+
+            // Delete Task
+            deleteTask(id) {
+                this.tasks = this.tasks.filter(t => t.id !== id);
+                this.renderTasks();
+                this.updateProgress();
+                this.showToast("タスクを削除しました");
+            }
+
+            // Filter Tasks
+            filterTasks(category) {
+                this.currentFilter = category;
+                ['all', 'admin', 'back'].forEach(cat => {
+                    const btn = document.getElementById(`filter-${cat}`);
+                    if (cat === category) {
+                        btn.className = "px-2 py-1 bg-slate-700 text-white rounded font-bold";
+                    } else {
+                        btn.className = "px-2 py-1 text-slate-400 hover:text-white rounded";
+                    }
+                });
+                this.renderTasks();
+            }
+
+            // Render Transcript Area
+            renderTranscript(data) {
+                const container = document.getElementById('transcript-container');
+                const countBadge = document.getElementById('results-count');
+                container.innerHTML = '';
+
+                countBadge.innerText = `${data.length}項目該当`;
+
+                if (data.length === 0) {
+                    container.innerHTML = `<div class="text-slate-500 py-4 text-center">該当する発言はありません。</div>`;
+                    return;
+                }
+
+                data.forEach(item => {
+                    const block = document.createElement('div');
+                    block.className = "p-2.5 bg-slate-900 border border-slate-800 rounded-lg hover:border-slate-700 transition flex gap-3";
+                    block.innerHTML = `
+                        <a href="${item.url}" target="_blank" class="font-mono text-amber-400 hover:underline font-bold shrink-0 flex items-center space-x-1 self-start">
+                            <i class="fa-brands fa-youtube text-red-500 mr-1"></i><span>${item.time}</span>
+                        </a>
+                        <div class="text-slate-300 leading-relaxed">${item.text}</div>
+                    `;
+                    container.appendChild(block);
+                });
+            }
+
+            // Search in transcript
+            searchTranscript() {
+                const query = document.getElementById('transcript-search').value.toLowerCase();
+                const filtered = transcriptData.filter(item => {
+                    return item.text.toLowerCase().includes(query) || item.time.includes(query);
+                });
+                this.renderTranscript(filtered);
+            }
+
+            // Click TOC item and scroll/focus on text
+            seekTo(time) {
+                document.getElementById('transcript-search').value = time;
+                this.searchTranscript();
+                this.showToast(`タイムスタンプ ${time} にフォーカスしました`);
+            }
+
+            // Select Actor to view detail
+            selectActor(key) {
+                const actor = actorData[key];
+                if (!actor) return;
+
+                const box = document.getElementById('actor-detail-box');
+                const title = document.getElementById('actor-detail-name');
+                const desc = document.getElementById('actor-detail-desc');
+
+                title.innerText = actor.name;
+                desc.innerHTML = `<span class="text-amber-400 font-bold">[組合・工作上の役割]</span> ${actor.role}<br><br><span class="text-slate-200">[詳細解析]</span> ${actor.desc}`;
+                
+                // Add flash effect
+                box.classList.remove('glow-red');
+                void box.offsetWidth; // trigger reflow
+                box.classList.add('glow-red');
+            }
+
+            // Show Toast Alert (Helper)
+            showToast(msg) {
+                const toast = document.getElementById('toast');
+                const toastMsg = document.getElementById('toast-message');
+                toastMsg.innerText = msg;
+                toast.style.opacity = '1';
+                setTimeout(() => {
+                    toast.style.opacity = '0';
+                }, 2500);
+            }
+        }
+
+        // Mount App
+        let app;
+        window.onload = function() {
+            app = new CloverDashboard();
+        };
+    </script>
+</body>
+</html>
